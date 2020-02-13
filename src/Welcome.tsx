@@ -2,13 +2,14 @@ import React from 'react';
 import {
   Button,
   Jumbotron } from 'reactstrap';
+import { IUser } from './NavBar';
 
-function WelcomeContent(props) {
+const WelcomeContent = (props: IWelcomeProps) => {
   // If authenticated, greet the user
   if (props.isAuthenticated) {
     return (
       <div>
-        <h4>Welcome {props.user.displayName}!</h4>
+        <h4>Welcome {props.user?.displayName}!</h4>
         <p>Use the navigation bar at the top of the page to get started.</p>
       </div>
     );
@@ -17,9 +18,12 @@ function WelcomeContent(props) {
   // Not authenticated, present a sign in button
   return <Button color="primary" onClick={props.authButtonMethod}>Click here to sign in</Button>;
 }
-
-export default class Welcome extends React.Component {
-  render() {
+interface IWelcomeProps {
+  isAuthenticated: boolean;
+  authButtonMethod: () => void;
+  user?: IUser
+}
+const Welcome = (props: IWelcomeProps) => {
     return (
       <Jumbotron>
         <h1>React Graph Tutorial</h1>
@@ -27,10 +31,10 @@ export default class Welcome extends React.Component {
             This sample app shows how to use the Microsoft Graph API to access Outlook and OneDrive data from React
         </p>
         <WelcomeContent
-          isAuthenticated={this.props.isAuthenticated}
-          user={this.props.user}
-          authButtonMethod={this.props.authButtonMethod} />
+          isAuthenticated={props.isAuthenticated}
+          user={props.user}
+          authButtonMethod={props.authButtonMethod} />
       </Jumbotron>
     );
-  }
-}
+  };
+export default Welcome;

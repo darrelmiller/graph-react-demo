@@ -20,16 +20,7 @@ export async function getEvents(client:any) {
     return events;
   }
 
-  export async function getMessages(client:any) {
-    const messages:[GraphModels.Message] = await client
-      .api('/me/messages')
-      .select('subject')
-      .orderby('createdDateTime DESC')
-      .get();
-      console.log(messages);
-      return messages;
-  }
-  export const getMessages2 = async (client:any): Promise<GraphModels.Message[]> => {
+  export const getMessages = async (client:any): Promise<GraphModels.Message[]> => {
     const messages: PageCollection = await client
       .api('/me/messages')
       .select('subject')

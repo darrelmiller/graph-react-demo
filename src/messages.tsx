@@ -2,11 +2,11 @@ import * as GraphModels from "@microsoft/microsoft-graph-types"
 import React, { useState, useEffect } from 'react';
 import { Table } from 'reactstrap';
 import moment from 'moment';
-import { getMessages } from './GraphService';
+import GraphService from './GraphService';
 import { Client } from "@microsoft/microsoft-graph-client";
 interface IMessagesProps {
   client: Client;
-  showError: (message: string, debug: boolean) => void;
+  showError: (message: string, debug: string) => void;
 }
 
 const Messages = (props: IMessagesProps) => {
@@ -17,7 +17,7 @@ const Messages = (props: IMessagesProps) => {
   const [messages, setMessages] = useState<GraphModels.Message[]>([]);
   useEffect(() => {
     if(messages.length === 0) {
-      getMessages(props.client).then((mess) =>
+      new GraphService(props.client).getMessages().then((mess) =>
         setMessages(mess)
       );
     }

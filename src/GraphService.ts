@@ -30,7 +30,7 @@ export async function getEvents(client:any) {
       return messages.value as GraphModels.Message[];
   }
 
-  export async function getAllMessages(client:any) {
+  export const getAllMessages = async (client:any): Promise<GraphModels.Message[]> => {
     const messageCollection:PageCollection = await client
       .api('/me/messages')
       .select('subject')
@@ -45,11 +45,11 @@ export async function getEvents(client:any) {
           i++;
           console.log(i);
 
-        return i < 5;
+        return i < 50;
       };
       let pageIterator = new PageIterator(client, messageCollection, callback);
       pageIterator.iterate();
-      return { value: allMessages} ;
+      return allMessages;
   }
 
   export async function sendMail() {
